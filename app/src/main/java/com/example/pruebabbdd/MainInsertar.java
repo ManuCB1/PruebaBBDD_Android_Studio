@@ -31,6 +31,10 @@ public class MainInsertar extends AppCompatActivity {
             else Toast.makeText(MainInsertar.this, "Error al añadir", Toast.LENGTH_SHORT).show();
         });
 
-        btnConsultar.setOnClickListener(view -> bdAdaptador.consultar());
+        btnConsultar.setOnClickListener(view ->{
+                    String nombre = bdAdaptador.consultarId(new String[]{"16"});
+                    Toast.makeText(this, "Nombre: "+nombre, Toast.LENGTH_SHORT).show();
+        });
+
     }
 }

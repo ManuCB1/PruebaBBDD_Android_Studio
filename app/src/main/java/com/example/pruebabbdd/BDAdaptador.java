@@ -45,7 +45,7 @@ public class BDAdaptador {
         Cursor cursor = bd.query("alumnos", columnas, null, null, null, null, null);
         //Resultados
         if (cursor != null && cursor.moveToFirst()){
-            do {
+            while (cursor.moveToNext()){
                 int idIndex = cursor.getColumnIndex("_id");
                 int nombreIndex = cursor.getColumnIndex("nombre");
                 int edadIndex = cursor.getColumnIndex("edad");
@@ -59,10 +59,24 @@ public class BDAdaptador {
 
                 //Log Consulta
                 Log.i("Consulta", "Id="+id+"\nNombre="+nombre+ "\nEdad="+edad+"\nEmail="+email);
-            }while (cursor.moveToNext());
+            };
             cursor.close();
         }
         bd.close();
+    }
+
+    public String consultarId(String[] parametros){
+        //Abrimos la BD en modo lectura
+        bd=baseDatos.getReadableDatabase();
+        //Consulta
+        String query = "SELECT nombre FROM alumnos where _id = ?";
+        Cursor cursor = bd.rawQuery(query, parametros);
+        String nombre = "";
+        if (cursor != null && cursor.moveToFirst()){
+            nombre = cursor.getString(0);
+        }
+
+        return nombre;
     }
 
 }
